@@ -5,60 +5,64 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 
 export default function App(){
-    const [name,setName]=useState("");
-    const [email,setEmail]=useState("");
-    const [pwd,setPwd]=useState("");
-    const [gender,setGender]=useState("");
-    const [terms,setTerms]=useState(false);
-    const [dob,setDob]=useState(new Date());
-    const [city,setCity]=useState("Ahmedabad");
-    const [datePick,showDate]=useState(false);
-    const [error,setError]=useState("");
-    const [load,showLoad]=useState(false);
- 
-    const submitForm=()=>{
-      if(name==="" || email==="" || pwd==="")
-        setError("All fields must be filled")
-      else if(!email.includes("@") && !email.includes("."))
-        setError("Please enter correct e-mail")
-      else if(pwd.length<8)
-        setError("Password length is too short")
-      else if(gender==="")
-        setError("Please select gender")
-      else if(!terms)
-        setError("Please select conditions")
-      else
-        {
-          showLoad(true)
-        setTimeout(()=>{
-          showLoad(false)
-          alert("Data added succesfully")
-
-        },5000)
-        }
+const [name,setName]=useState("")
+const [email,setEmail]=useState("")
+const [pass,setPass]=useState("")
+const [gender,setGender]=useState("Male")
+const [city,setCity]=useState("Ahmedabad")
+const [dob,showDate]=useState(new Date())
+const [terms,setTerms]=useState(false)
+const [datePick,showPicker]=useState(false)
+const [error,setError]=useState("")
+const [loader,showLoader]=useState(false)
 
 
+const checkValidate=()=>{
+
+    if(name==="" || email==="" || pass==="")
+      setError("All fields are requried")
+    else if(!email.includes("@") && !email.includes("."))
+      setError("Please enter correct email")
+    else if(pass.length<8)
+      setError("Password must be more than 8 characters.")
+    else if(!terms)
+      setError("Please select terms & Cond.")
+    else{
+      showLoader(true)
+      setTimeout((()=>{
+        showLoader(false)
+      }),4000)
     }
+  
+}
+
  
     return (
         <View style={styles.container}>
             <Text style={styles.text}> Enter Name :</Text>
             <TextInput
             style={styles.textbox}
-            placeholder='Your Name' value={name} onChangeText={setName}></TextInput>
+            placeholder='Your Name' 
+            value={name}
+            onChangeText={setName}
+            ></TextInput>
             <Text style={styles.text}> Enter E-mail :</Text>
             <TextInput 
             style={styles.textbox}
-            placeholder='Your Email' value={email} onChangeText={setEmail}
+            placeholder='Your Email' 
                 keyboardType='email-address'
+                value={email}
+                onChangeText={setEmail}
             ></TextInput>
              <Text style={styles.text}> Enter Password :</Text>
             <TextInput 
             style={styles.textbox}
-            placeholder='Your Password' value={pwd} onChangeText={setPwd}
-                //secureTextEntry
+            placeholder='Your Password'
+                secureTextEntry
+                value={pass}
+                onChangeText={setPass}
             ></TextInput>
-            <Text style={styles.error}>{error}</Text>
+            <Text style={{color:'red'}}>{error}</Text>
             <Text style={styles.text}>Gender: </Text>
             {['Male', 'Female'].map(item => (
           <Pressable
@@ -131,10 +135,9 @@ export default function App(){
           <Text>Accept Terms & Conditions</Text>
         </Pressable>
 
-        <Pressable style={styles.button} onPress={submitForm}>
-        
-          {load && (<ActivityIndicator color="white"></ActivityIndicator>)}
-          <Text>Register</Text>
+        <Pressable style={styles.button} onPress={checkValidate} >
+            <Text>Test</Text>
+            {loader && <ActivityIndicator color="white"></ActivityIndicator>}
         </Pressable>
       
 

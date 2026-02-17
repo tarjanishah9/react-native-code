@@ -49,10 +49,11 @@ export default function App(){
         },
 
 ]
+const [profile,setProfile]=useState("")
 const openModal=(d)=>{
    
     setVisible(true)
-    setValue(d.url)
+    setProfile(d.url)
 }
 
 
@@ -95,14 +96,11 @@ const openModal=(d)=>{
                         animationType='slide'
                         onRequestClose={()=>setVisible(false)}
                     >
-                    <Pressable onPress={()=>setVisible(false)}
-                        style={{flex:1}}>
-                        
                         <View style={{backgroundColor:'rgba(0,0,0,0.6)',
                         flex:1,
                             justifyContent:'center',alignItems:'center'}}>
                             <View style={{alignItems:'center'}}>
-                            <Image source={{uri:val}}
+                            <Image source={{'uri':profile}}
                         style={{width:200,
                             height:200,
                            
@@ -110,16 +108,18 @@ const openModal=(d)=>{
                             borderColor:'black',
                             margin:10
                         }}></Image>
-                       
-                            
-                    
+                        <Pressable onPress={()=>setVisible(false)} style={{backgroundColor:'#234567',
+                            borderRadius:2,padding:10,borderColor:"#665544"
+                        }}>
+                            <Text style={{color:"001122"}}>Close</Text>
+                        </Pressable>
 
                             </View>
 
 
                         </View>
 
-                        </Pressable>
+
                     </Modal>
 
 
