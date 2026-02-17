@@ -1,15 +1,13 @@
-import {View,Text,Image, Pressable} from 'react-native'
+import {View,Text,Image, Pressable,FlatList} from 'react-native'
 
 export default function App(){
-
-    const name=["Jack","Jhony","John","Adam","Vince"]
     const student=[
         {'id':1,'fname':'Jack','lname':'A.','url':'https://avatar.iran.liara.run/public/24'},
         {'id':2,'fname':'Jhony','lname':'B.','url':'https://avatar.iran.liara.run/public/16'},
         {'id':3,'fname':'John','lname':'C.','url':'https://avatar.iran.liara.run/public/44'},
         {'id':4,'fname':'Adam','lname':'D.','url':'https://avatar.iran.liara.run/public/17'},
         {'id':5,'fname':'Vince','lname':'E.','url':'https://avatar.iran.liara.run/public/42'},
-
+        
         {'id':6,'fname':'Jack','lname':'A.','url':'https://avatar.iran.liara.run/public/24'},
         {'id':7,'fname':'Jhony','lname':'B.','url':'https://avatar.iran.liara.run/public/16'},
         {'id':8,'fname':'John','lname':'C.','url':'https://avatar.iran.liara.run/public/44'},
@@ -27,41 +25,28 @@ export default function App(){
         {'id':20,'fname':'Vince','lname':'E.','url':'https://avatar.iran.liara.run/public/42'},
 
     ]
- 
-    const nameClick=(n)=>{
-        alert("Hello "+n)
-    }
-    const studentClick=(s)=>{
-        alert("Id : "+s.id + "Name :  "+s.fname )
-    }
-    return(
-        <View style={{padding:20,backgroundColor:'#999',flex:1}}>
-            {student.map((s)=>(
-                <Pressable onPress={()=>studentClick(s)}>
-                <View key={s.id} style={{padding:10,backgroundColor:'#666',flexDirection:'row'}}>
-                    
-                    <Image source={{'uri':s.url}} style={{marginRight:20,width:50,height:50,borderColor:'black'}}></Image>
-                    <Text style={{color:'black'}}>{s.fname}</Text>
-                    <Text style={{color:'black'}}> {s.lname}</Text>
+    return (
+        <View style={{padding:20}}>
+            <FlatList
+            numColumns={5}
+                data={student}
+                keyExtractor={(item)=>item.id}
+                showsVerticalScrollIndicator={true}
+                
+                renderItem={({item})=>(
+                    <View >
+                   
+                    <Image source={{'uri':item.url}} style={{marginRight:20,width:50,height:50,borderColor:'black'}}></Image>
+                    <Text style={{color:'black'}}>{item.fname}</Text>
+                    <Text style={{color:'black'}}> {item.lname}</Text>
                 </View>
-                </Pressable>
- 
-            ))}
-            {name.map((item,index)=>(
-                <Pressable onPress={()=>nameClick(item)}>
-                    <View style={{padding:10,backgroundColor:'#666'}}>
-                        <Text key={index} style={{color:'black'}}>{item}</Text>
+              
+                )}
+                
+            >
 
-                    </View>
-                </Pressable>
- 
-                )
-
-            )} 
+            </FlatList>
 
         </View>
     )
-
-
-
 }
