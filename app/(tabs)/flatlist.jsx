@@ -1,6 +1,11 @@
 import {View,Text,Image, Pressable,FlatList} from 'react-native'
 
 export default function App(){
+    const Header=()=>(
+        <View style={{padding:10}}>
+            <Text style={{backgroundColor:'cyan',fontSize:20,fontWeight:'bold'}}> Student Name</Text>
+        </View>
+    )
     const student=[
         {'id':1,'fname':'Jack','lname':'A.','url':'https://avatar.iran.liara.run/public/24'},
         {'id':2,'fname':'Jhony','lname':'B.','url':'https://avatar.iran.liara.run/public/16'},
@@ -28,10 +33,12 @@ export default function App(){
     return (
         <View style={{padding:20}}>
             <FlatList
-            numColumns={5}
+            
                 data={student}
                 keyExtractor={(item)=>item.id}
-                showsVerticalScrollIndicator={true}
+                showsHorizontalScrollIndicator={true}
+                ListHeaderComponent={Header}
+                stickyHeaderIndices={[0]}
                 
                 renderItem={({item})=>(
                     <View >
