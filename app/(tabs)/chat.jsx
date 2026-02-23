@@ -1,42 +1,52 @@
 import { useState } from 'react'
-import {View,TextInput,FlatList,Pressable,Text, StyleSheet} from 'react-native'
+import {View,TextInput,FlatList,Pressable,Text, StyleSheet, ImageBackground} from 'react-native'
 
 export default function App(){
+    
     const [myMessage,setMyMessage]=useState("")
     const [urMessage,setUrMessage]=useState("")
-    const [isMyMessage,setIsMyMessage]=useState(false)
+   
     const [flat,setFlat]=useState([{}])
-    const sendMyMessage=()=>{
-        setIsMyMessage(true)
-        const newData= {'id':flat.length+1,'message':myMessage,'isMyMes':true }
-        setFlat([...flat,newData]); //spread operator
-        setMyMessage("")
+    const sendMyMessage=(isMyMessage)=>{
+        if(isMyMessage){
+            const data={'id':flat.length+1,'message':myMessage,'align':'right'}
+            setFlat([...flat,data])
+            setMyMessage("")
+        }
+        else{
+            const data={'id':flat.length+1,'message':urMessage,'align':'left'}
+            setFlat([...flat,data])
+            setUrMessage("")
+        }
+       
     }
     return (
         <View style={{padding:20,flex:1}}>
             <View>
+                <ImageBackground source={{'uri':'https://i.pinimg.com/736x/8c/98/99/8c98994518b575bfd8c949e91d20548b.jpg'}}>
                 <FlatList
             data={flat}
             style={{marginTop:10}}
                 keyExtractor={(item)=>item.id}
                 renderItem={({item})=>(
-                        <View style={{backgroundColor:'cyan',
+                        <View style={{backgroundColor:'rgba(125,11,145,0.6)',
                         flex:1,padding:10}}>
                                  <Text style={{color:'black',
-                                    textAlign:isMyMessage?'right':'left'}}>{item.message}</Text>
+                                    textAlign:item.align==='left'?'left':'right'}}>{item.message}</Text>
                                 
                                 
                         </View> 
                   
                 )}
             ></FlatList>
+            </ImageBackground>
 
             </View>
             <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
                 <TextInput placeholder='My Message' style={style.input}
                     value={myMessage} onChangeText={setMyMessage}
                 ></TextInput>
-                <Pressable style={style.btn} onPress={sendMyMessage}>
+                <Pressable style={style.btn} onPress={()=>sendMyMessage(true)}>
                     <Text>Send</Text>
                 </Pressable>
 
@@ -45,7 +55,7 @@ export default function App(){
                 <TextInput placeholder='Your Message' style={style.input}
                     value={urMessage} onChangeText={setUrMessage}
                 ></TextInput>
-                <Pressable style={style.btn} onPress={sendUrMessage}>
+                <Pressable style={style.btn} onPress={()=>sendMyMessage(false)}>
                     <Text>Send</Text>
                 </Pressable>
 
@@ -55,7 +65,7 @@ export default function App(){
     
 }
 const style=StyleSheet.create({
-    input:{borderColor:'grey',borderRadius:10,borderWidth:1,width:400,padding:10,margin:10},
+    input:{borderColor:'grey',width:250,borderRadius:10,borderWidth:1,padding:10,margin:10},
     btn:{backgroundColor:'cyan',borderRadius:2,padding:10,margin:10}
     
         
